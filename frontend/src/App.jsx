@@ -665,13 +665,13 @@ function App() {
                   <h3 className="font-semibold text-green-800">Lucros</h3>
                 </div>
                 <p className="text-sm text-green-700">
-                  Máximo: R$ {estatisticas.lucro_maximo?.toFixed(2) || 0}
+                  Máximo: {estatisticas.lucro_maximo?.toFixed(2) || 0}%
                 </p>
                 <p className="text-sm text-green-700">
-                  Médio: R$ {estatisticas.lucro_medio?.toFixed(2) || 0}
+                  Médio: {estatisticas.lucro_medio?.toFixed(2) || 0}%
                 </p>
                 <p className="text-sm text-green-700">
-                  Mínimo: R$ {estatisticas.lucro_minimo?.toFixed(2) || 0}
+                  Mínimo: {estatisticas.lucro_minimo?.toFixed(2) || 0}%
                 </p>
               </div>
 
@@ -681,13 +681,13 @@ function App() {
                   <h3 className="font-semibold text-red-800">Prejuízos</h3>
                 </div>
                 <p className="text-sm text-red-700">
-                  Máximo: R$ {estatisticas.prejuizo_maximo?.toFixed(2) || 0}
+                  Máximo: {estatisticas.prejuizo_maximo?.toFixed(2) || 0}%
                 </p>
                 <p className="text-sm text-red-700">
-                  Médio: R$ {estatisticas.prejuizo_medio?.toFixed(2) || 0}
+                  Médio: {estatisticas.prejuizo_medio?.toFixed(2) || 0}%
                 </p>
                 <p className="text-sm text-red-700">
-                  Mínimo: R$ {estatisticas.prejuizo_minimo?.toFixed(2) || 0}
+                  Mínimo: {estatisticas.prejuizo_minimo?.toFixed(2) || 0}%
                 </p>
               </div>
             </div>

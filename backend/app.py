@@ -235,23 +235,24 @@ def get_estatisticas():
     apostas_red = [a for a in apostas if a.status == 'red']
     chance_perda_pct = (len(apostas_red) / len(apostas)) * 100
     
-    # Separar lucros e prejuízos - MUDANÇA: usar valores absolutos
-    lucros = [abs(a.lucro_perda) for a in apostas if a.status == 'green']
-    prejuizos = [abs(a.lucro_perda) for a in apostas if a.status == 'red']
+    # MUDANÇA: Calcular porcentagens ao invés de valores absolutos
+    # Separar lucros e prejuízos baseados na porcentagem sobre o risco
+    lucros_pct = [(a.lucro_perda / a.risco) * 100 for a in apostas if a.status == 'green']
+    prejuizos_pct = [abs((a.lucro_perda / a.risco) * 100) for a in apostas if a.status == 'red']
     
-    # Estatísticas de lucro
-    if lucros:
-        lucro_maximo = max(lucros)
-        lucro_medio = sum(lucros) / len(lucros)
-        lucro_minimo = min(lucros)
+    # Estatísticas de lucro em %
+    if lucros_pct:
+        lucro_maximo = max(lucros_pct)
+        lucro_medio = sum(lucros_pct) / len(lucros_pct)
+        lucro_minimo = min(lucros_pct)
     else:
         lucro_maximo = lucro_medio = lucro_minimo = 0
     
-    # Estatísticas de prejuízo
-    if prejuizos:
-        prejuizo_maximo = max(prejuizos)
-        prejuizo_medio = sum(prejuizos) / len(prejuizos)
-        prejuizo_minimo = min(prejuizos)
+    # Estatísticas de prejuízo em %
+    if prejuizos_pct:
+        prejuizo_maximo = max(prejuizos_pct)
+        prejuizo_medio = sum(prejuizos_pct) / len(prejuizos_pct)
+        prejuizo_minimo = min(prejuizos_pct)
     else:
         prejuizo_maximo = prejuizo_medio = prejuizo_minimo = 0
     
