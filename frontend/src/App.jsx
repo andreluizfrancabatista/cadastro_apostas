@@ -70,11 +70,10 @@ function App() {
   // Estados para formulário de aposta
   const [formData, setFormData] = useState({
     data_hora: '',
-    time_casa: '',
-    time_visitante: '',
+    jogo: '',
     metodo_id: '',
-    stake: '',
-    retorno: ''
+    risco: '',
+    lucro_perda: ''
   });
 
   // Estado para novo método
@@ -163,8 +162,8 @@ function App() {
         },
         body: JSON.stringify({
           ...formData,
-          stake: parseFloat(formData.stake),
-          retorno: parseFloat(formData.retorno),
+          risco: parseFloat(formData.risco),
+          lucro_perda: parseFloat(formData.lucro_perda),
           metodo_id: parseInt(formData.metodo_id)
         }),
       });
@@ -172,11 +171,10 @@ function App() {
       if (response.ok) {
         setFormData({
           data_hora: '',
-          time_casa: '',
-          time_visitante: '',
+          jogo: '',
           metodo_id: '',
-          stake: '',
-          retorno: ''
+          risco: '',
+          lucro_perda: ''
         });
         setEditingAposta(null);
         fetchApostas();
@@ -234,11 +232,10 @@ function App() {
   const handleEditAposta = (aposta) => {
     setFormData({
       data_hora: aposta.data_hora,
-      time_casa: aposta.time_casa,
-      time_visitante: aposta.time_visitante,
+      jogo: aposta.jogo,
       metodo_id: aposta.metodo_id.toString(),
-      stake: aposta.stake.toString(),
-      retorno: aposta.retorno.toString()
+      risco: aposta.risco.toString(),
+      lucro_perda: aposta.lucro_perda.toString()
     });
     setEditingAposta(aposta);
     setActiveTab('cadastro');
@@ -306,11 +303,10 @@ function App() {
     setEditingMetodo(null);
     setFormData({
       data_hora: '',
-      time_casa: '',
-      time_visitante: '',
+      jogo: '',
       metodo_id: '',
-      stake: '',
-      retorno: ''
+      risco: '',
+      lucro_perda: ''
     });
     setNovoMetodo('');
   };
@@ -427,44 +423,30 @@ function App() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Time da Casa
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.time_casa}
-                    onChange={(e) => setFormData({...formData, time_casa: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Time Visitante
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.time_visitante}
-                    onChange={(e) => setFormData({...formData, time_visitante: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Jogo
+                </label>
+                <input
+                  type="text"
+                  value={formData.jogo}
+                  onChange={(e) => setFormData({...formData, jogo: e.target.value})}
+                  placeholder="Ex: Flamengo x Corinthians"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Stake
+                    Risco (R$)
                   </label>
                   <input
                     type="number"
                     step="0.01"
-                    value={formData.stake}
-                    onChange={(e) => setFormData({...formData, stake: e.target.value})}
+                    value={formData.risco}
+                    onChange={(e) => setFormData({...formData, risco: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
@@ -472,16 +454,20 @@ function App() {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Retorno
+                    Lucro/Perda (R$)
                   </label>
                   <input
                     type="number"
                     step="0.01"
-                    value={formData.retorno}
-                    onChange={(e) => setFormData({...formData, retorno: e.target.value})}
+                    value={formData.lucro_perda}
+                    onChange={(e) => setFormData({...formData, lucro_perda: e.target.value})}
+                    placeholder="Use + para lucro, - para perda"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
+                  <p className="mt-1 text-xs text-gray-500">
+                    Ex: 8 (lucro) ou -15 (perda)
+                  </p>
                 </div>
               </div>
 
@@ -581,10 +567,10 @@ function App() {
                   <thead>
                     <tr className="bg-gray-50">
                       <th className="border px-4 py-2 text-left">Data e Hora</th>
-                      <th className="border px-4 py-2 text-left">Casa vs Visitante</th>
+                      <th className="border px-4 py-2 text-left">Jogo</th>
                       <th className="border px-4 py-2 text-left">Método</th>
-                      <th className="border px-4 py-2 text-left">Stake</th>
-                      <th className="border px-4 py-2 text-left">Retorno</th>
+                      <th className="border px-4 py-2 text-left">Risco</th>
+                      <th className="border px-4 py-2 text-left">Lucro/Perda</th>
                       <th className="border px-4 py-2 text-left">Resultado</th>
                       <th className="border px-4 py-2 text-left">Status</th>
                       <th className="border px-4 py-2 text-left">Ações</th>
@@ -594,17 +580,21 @@ function App() {
                     {apostas.map(aposta => (
                       <tr key={aposta.id} className="hover:bg-gray-50">
                         <td className="border px-4 py-2">{aposta.data_formatada}</td>
-                        <td className="border px-4 py-2">
-                          {aposta.time_casa} vs {aposta.time_visitante}
-                        </td>
+                        <td className="border px-4 py-2">{aposta.jogo}</td>
                         <td className="border px-4 py-2">{aposta.metodo_nome}</td>
-                        <td className="border px-4 py-2">R$ {aposta.stake.toFixed(2)}</td>
-                        <td className="border px-4 py-2">R$ {aposta.retorno.toFixed(2)}</td>
+                        <td className="border px-4 py-2">R$ {aposta.risco.toFixed(2)}</td>
+                        <td className="border px-4 py-2">
+                          <span className={`font-medium ${
+                            aposta.lucro_perda >= 0 ? 'text-green-600' : 'text-red-600'
+                          }`}>
+                            R$ {aposta.lucro_perda.toFixed(2)}
+                          </span>
+                        </td>
                         <td className="border px-4 py-2">
                           <span className={`font-medium ${
                             aposta.status === 'green' ? 'text-green-600' : 'text-red-600'
                           }`}>
-                            {aposta.resultado_pct.toFixed(2)}%
+                            {((aposta.lucro_perda / aposta.risco) * 100).toFixed(2)}%
                           </span>
                         </td>
                         <td className="border px-4 py-2">
@@ -675,13 +665,13 @@ function App() {
                   <h3 className="font-semibold text-green-800">Lucros</h3>
                 </div>
                 <p className="text-sm text-green-700">
-                  Máximo: {estatisticas.lucro_maximo?.toFixed(2) || 0}%
+                  Máximo: R$ {estatisticas.lucro_maximo?.toFixed(2) || 0}
                 </p>
                 <p className="text-sm text-green-700">
-                  Médio: {estatisticas.lucro_medio?.toFixed(2) || 0}%
+                  Médio: R$ {estatisticas.lucro_medio?.toFixed(2) || 0}
                 </p>
                 <p className="text-sm text-green-700">
-                  Mínimo: {estatisticas.lucro_minimo?.toFixed(2) || 0}%
+                  Mínimo: R$ {estatisticas.lucro_minimo?.toFixed(2) || 0}
                 </p>
               </div>
 
@@ -691,13 +681,13 @@ function App() {
                   <h3 className="font-semibold text-red-800">Prejuízos</h3>
                 </div>
                 <p className="text-sm text-red-700">
-                  Máximo: {estatisticas.prejuizo_maximo?.toFixed(2) || 0}%
+                  Máximo: R$ {estatisticas.prejuizo_maximo?.toFixed(2) || 0}
                 </p>
                 <p className="text-sm text-red-700">
-                  Médio: {estatisticas.prejuizo_medio?.toFixed(2) || 0}%
+                  Médio: R$ {estatisticas.prejuizo_medio?.toFixed(2) || 0}
                 </p>
                 <p className="text-sm text-red-700">
-                  Mínimo: {estatisticas.prejuizo_minimo?.toFixed(2) || 0}%
+                  Mínimo: R$ {estatisticas.prejuizo_minimo?.toFixed(2) || 0}
                 </p>
               </div>
             </div>

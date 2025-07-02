@@ -38,11 +38,10 @@ class Aposta(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     data_hora = db.Column(db.DateTime, nullable=False)
-    time_casa = db.Column(db.String(100), nullable=False)
-    time_visitante = db.Column(db.String(100), nullable=False)
+    jogo = db.Column(db.String(200), nullable=False)  # MUDANÇA: campo único para o jogo
     metodo_id = db.Column(db.Integer, db.ForeignKey('metodos.id'), nullable=False)
-    stake = db.Column(db.Float, nullable=False)
-    retorno = db.Column(db.Float, nullable=False)
+    risco = db.Column(db.Float, nullable=False)  # MUDANÇA: stake → risco
+    lucro_perda = db.Column(db.Float, nullable=False)  # MUDANÇA: retorno → lucro_perda
     resultado_pct = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(10), nullable=False)
     
@@ -53,25 +52,28 @@ class Aposta(db.Model):
             'id': self.id,
             'data_hora': self.data_hora.strftime('%Y-%m-%dT%H:%M'),
             'data_formatada': self.data_hora.strftime('%d/%m/%Y %H:%M'),
-            'time_casa': self.time_casa,
-            'time_visitante': self.time_visitante,
+            'jogo': self.jogo,  # MUDANÇA: campo único
             'metodo_id': self.metodo_id,
             'metodo_nome': self.metodo.nome if self.metodo else '',
-            'stake': self.stake,
-            'retorno': self.retorno,
+            'risco': self.risco,  # MUDANÇA: stake → risco
+            'lucro_perda': self.lucro_perda,  # MUDANÇA: retorno → lucro_perda
             'resultado_pct': self.resultado_pct,
             'status': self.status
         }
 
 # Função para calcular resultado e status
-def calcular_resultado_status(stake, retorno):
-    if retorno > stake:
-        resultado = ((retorno - stake) / stake) * 100
+def calcular_resultado_status(lucro_perda):
+    # MUDANÇA: Cálculo simplificado - lucro_perda já é o valor absoluto
+    if lucro_perda > 0:
         status = 'green'
     else:
-        resultado = ((stake - retorno) / stake) * 100
         status = 'red'
-    return resultado, status
+    
+    # Resultado em percentual baseado no lucro/perda absoluto
+    # Para mostrar na interface, mas o valor já está correto
+    resultado_pct = abs(lucro_perda)  # Usar valor absoluto para percentual
+    
+    return resultado_pct, status
 
 # Rotas da API
 
@@ -137,7 +139,8 @@ def get_apostas():
 def create_aposta():
     data = request.get_json()
     
-    required_fields = ['data_hora', 'time_casa', 'time_visitante', 'metodo_id', 'stake', 'retorno']
+    # MUDANÇA: campos atualizados
+    required_fields = ['data_hora', 'jogo', 'metodo_id', 'risco', 'lucro_perda']
     if not data or not all(field in data for field in required_fields):
         return jsonify({'error': 'Todos os campos são obrigatórios'}), 400
     
@@ -146,15 +149,14 @@ def create_aposta():
         data_hora_obj = datetime.fromisoformat(data['data_hora'])
         
         # Calcular resultado e status
-        resultado, status = calcular_resultado_status(data['stake'], data['retorno'])
+        resultado, status = calcular_resultado_status(data['lucro_perda'])
         
         aposta = Aposta(
             data_hora=data_hora_obj,
-            time_casa=data['time_casa'],
-            time_visitante=data['time_visitante'],
+            jogo=data['jogo'],  # MUDANÇA: campo único
             metodo_id=data['metodo_id'],
-            stake=data['stake'],
-            retorno=data['retorno'],
+            risco=data['risco'],  # MUDANÇA: stake → risco
+            lucro_perda=data['lucro_perda'],  # MUDANÇA: retorno → lucro_perda
             resultado_pct=resultado,
             status=status
         )
@@ -177,20 +179,18 @@ def update_aposta(aposta_id):
     try:
         if 'data_hora' in data:
             aposta.data_hora = datetime.fromisoformat(data['data_hora'])
-        if 'time_casa' in data:
-            aposta.time_casa = data['time_casa']
-        if 'time_visitante' in data:
-            aposta.time_visitante = data['time_visitante']
+        if 'jogo' in data:  # MUDANÇA: campo único
+            aposta.jogo = data['jogo']
         if 'metodo_id' in data:
             aposta.metodo_id = data['metodo_id']
-        if 'stake' in data:
-            aposta.stake = data['stake']
-        if 'retorno' in data:
-            aposta.retorno = data['retorno']
+        if 'risco' in data:  # MUDANÇA: stake → risco
+            aposta.risco = data['risco']
+        if 'lucro_perda' in data:  # MUDANÇA: retorno → lucro_perda
+            aposta.lucro_perda = data['lucro_perda']
         
-        # Recalcular resultado e status se stake ou retorno foram alterados
-        if 'stake' in data or 'retorno' in data:
-            resultado, status = calcular_resultado_status(aposta.stake, aposta.retorno)
+        # Recalcular resultado e status se lucro_perda foi alterado
+        if 'lucro_perda' in data:
+            resultado, status = calcular_resultado_status(aposta.lucro_perda)
             aposta.resultado_pct = resultado
             aposta.status = status
         
@@ -235,9 +235,9 @@ def get_estatisticas():
     apostas_red = [a for a in apostas if a.status == 'red']
     chance_perda_pct = (len(apostas_red) / len(apostas)) * 100
     
-    # Separar lucros e prejuízos
-    lucros = [a.resultado_pct for a in apostas if a.status == 'green']
-    prejuizos = [a.resultado_pct for a in apostas if a.status == 'red']
+    # Separar lucros e prejuízos - MUDANÇA: usar valores absolutos
+    lucros = [abs(a.lucro_perda) for a in apostas if a.status == 'green']
+    prejuizos = [abs(a.lucro_perda) for a in apostas if a.status == 'red']
     
     # Estatísticas de lucro
     if lucros:
