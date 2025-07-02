@@ -23,12 +23,6 @@ build/
 .next/
 out/
 
-# Banco de dados
-*.db
-*.sqlite
-*.sqlite3
-data/
-
 # Cache
 .cache/
 .parcel-cache/

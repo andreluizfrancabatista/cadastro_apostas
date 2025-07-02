@@ -1,10 +1,15 @@
 # 🎯 Sistema de Apostas Esportivas
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/github/license/andreluizfrancabatista/cadastro_apostas?cacheSeconds=60)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)
 ![Python](https://img.shields.io/badge/python-v3.11+-blue.svg)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=flat&logo=flask&logoColor=white)
+
+![GitHub issues](https://img.shields.io/github/issues/andreluizfrancabatista/cadastro_apostas?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/andreluizfrancabatista/cadastro_apostas?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/andreluizfrancabatista/cadastro_apostas?style=flat-square)
+![Maintenance](https://img.shields.io/badge/maintained-yes-green?style=flat-square)
 
 Uma aplicação web completa para registro, consulta e análise estatística de apostas esportivas, desenvolvida com React, Flask e Docker.
 
@@ -223,19 +228,3 @@ CREATE TABLE metodos (
 ## 📝 Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-## 👤 Autor
-
-**Seu Nome**
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- Email: seu.email@exemplo.com
-
-## 🙏 Agradecimentos
-
-- Comunidade React por uma biblioteca incrível
-- Equipe do Flask pelo framework simples e poderoso
-- Tailwind CSS por facilitar o desenvolvimento de interfaces
-
----
-
-⭐ **Se este projeto foi útil para você, considere dar uma estrela!**
