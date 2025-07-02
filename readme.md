@@ -11,21 +11,6 @@
 ![GitHub forks](https://img.shields.io/github/forks/andreluizfrancabatista/cadastro_apostas?style=flat-square)
 ![Maintenance](https://img.shields.io/badge/maintained-yes-green?style=flat-square)
 
-
-
-# 🎯 Sistema de Apostas Esportivas
-
-![License](https://img.shields.io/github/license/andreluizfrancabatista/cadastro_apostas?cacheSeconds=60)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)
-![Python](https://img.shields.io/badge/python-v3.11+-blue.svg)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=flat&logo=flask&logoColor=white)
-
-![GitHub issues](https://img.shields.io/github/issues/andreluizfrancabatista/cadastro_apostas?style=flat-square)
-![GitHub stars](https://img.shields.io/github/stars/andreluizfrancabatista/cadastro_apostas?style=flat-square)
-![GitHub forks](https://img.shields.io/github/forks/andreluizfrancabatista/cadastro_apostas?style=flat-square)
-![Maintenance](https://img.shields.io/badge/maintained-yes-green?style=flat-square)
-
 Uma aplicação web completa para registro, consulta e análise estatística de apostas esportivas, desenvolvida com React, Flask e Docker. Sistema profissional com interface moderna, notificações elegantes e funcionalidades avançadas.
 
 ## 🚀 Funcionalidades
