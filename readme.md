@@ -29,15 +29,20 @@ Uma aplicação web completa para registro, consulta e análise estatística de 
 ├── 📁 backend/
 │   ├── app.py              # API Flask
 │   ├── requirements.txt    # Dependências Python
-│   └── Dockerfile         # Container do backend
+│   └── Dockerfile          # Container do backend
+├── 📁 data/
+│   └── apostas.db          # Banco de dados
 ├── 📁 frontend/
 │   ├── src/
 │   │   └── App.jsx        # Aplicação React
+│   │   └── index.css      # Estilos
+│   │   └── main.jsx       # Estilos
 │   ├── package.json       # Dependências Node.js
 │   ├── vite.config.js     # Configuração Vite
 │   ├── tailwind.config.js # Configuração Tailwind
 │   ├── nginx.conf         # Configuração Nginx
 │   └── Dockerfile         # Container do frontend
+│   └── index.html         # Página principal
 ├── docker-compose.yml     # Orquestração dos serviços
 ├── .gitignore            # Arquivos ignorados pelo Git
 ├── LICENSE               # Licença MIT
@@ -74,8 +79,8 @@ Uma aplicação web completa para registro, consulta e análise estatística de 
 
 1. **Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/apostas-esportivas.git
-cd apostas-esportivas
+git clone https://github.com/andreluizfrancabatista/cadastro_apostas.git
+cd cadastro_apostas
 ```
 
 2. **Execute com Docker Compose**
@@ -84,7 +89,7 @@ docker-compose up -d
 ```
 
 3. **Acesse a aplicação**
-- Frontend: http://localhost
+- Frontend: http://localhost:3000
 - Backend API: http://localhost:5000
 
 ### Execução Local (Desenvolvimento)
